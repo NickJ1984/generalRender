@@ -1,0 +1,9 @@
+c:\users\nickj\documents\visual studio 2015\Projects\generalRender\generalRender\bin\Debug\generalRender.exe.config
+c:\users\nickj\documents\visual studio 2015\Projects\generalRender\generalRender\bin\Debug\generalRender.exe
+c:\users\nickj\documents\visual studio 2015\Projects\generalRender\generalRender\bin\Debug\generalRender.pdb
+c:\users\nickj\documents\visual studio 2015\Projects\generalRender\generalRender\obj\Debug\generalRender.csprojResolveAssemblyReference.cache
+c:\users\nickj\documents\visual studio 2015\Projects\generalRender\generalRender\obj\Debug\generalRender.Form1.resources
+c:\users\nickj\documents\visual studio 2015\Projects\generalRender\generalRender\obj\Debug\generalRender.Properties.Resources.resources
+c:\users\nickj\documents\visual studio 2015\Projects\generalRender\generalRender\obj\Debug\generalRender.csproj.GenerateResource.Cache
+c:\users\nickj\documents\visual studio 2015\Projects\generalRender\generalRender\obj\Debug\generalRender.exe
+c:\users\nickj\documents\visual studio 2015\Projects\generalRender\generalRender\obj\Debug\generalRender.pdb
