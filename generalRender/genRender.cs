@@ -44,7 +44,12 @@ namespace generalRender
             setColor(_color);
             setDirection(_direction);
         }
-
+        public mazeElement(int _width, int _height, Color _color) 
+            : this(_width, _height, _color, e_direction.none)
+        { }
+        public mazeElement(int _width, int _height)
+            : this(_width, _height, Color.Black, e_direction.none)
+        { }
         public mazeElement(mazeElement element)
         {
             width = element.width;
@@ -66,7 +71,6 @@ namespace generalRender
             if (direction == _direction || _direction == 0) return;
             direction = _direction;
             box.reset();
-            Pen cPen = new Pen(color);
 
             if ((direction & e_direction.down) == e_direction.down) setBound_down();
             if ((direction & e_direction.up) == e_direction.up) setBound_up();
