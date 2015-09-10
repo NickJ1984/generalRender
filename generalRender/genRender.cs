@@ -51,12 +51,8 @@ namespace generalRender
             : this(_width, _height, Color.Black, e_direction.none)
         { }
         public mazeElement(mazeElement element)
-        {
-            width = element.width;
-            height = element.height;
-            setColor(element.color);
-            setDirection(element.direction);
-        }
+            :this(element.width, element.height, element.color, element.direction)
+        { }
     }
 
     partial class mazeElement
@@ -65,24 +61,25 @@ namespace generalRender
         {
             cPen = new Pen(_color);
             color = _color;
+            draw();
         }
         public void setDirection(e_direction _direction)
         {
             if (direction == _direction || _direction == 0) return;
             direction = _direction;
-            box.reset();
-
-            if ((direction & e_direction.down) == e_direction.down) setBound_down();
-            if ((direction & e_direction.up) == e_direction.up) setBound_up();
-            if ((direction & e_direction.left) == e_direction.left) setBound_left();
-            if ((direction & e_direction.right) == e_direction.right) setBound_right();
-
+            draw();
             if (onChangeBoundaries != null) onChangeBoundaries(direction);
         }
         public void addDirection(e_direction _direction)
         {
             setDirection(direction | _direction);
         }
+
+        public void delDirection(e_direction _direction)
+        {
+            if ((direction & _direction) == _direction) setDirection(direction ^ _direction);
+        }
+        /*
         public void setNeighboursBounds(mazeElement left, mazeElement right, mazeElement up, mazeElement down)
         {
             e_direction temp = new e_direction();
@@ -108,10 +105,20 @@ namespace generalRender
                 default:
                     return e_direction.none;
             }
-        }
+        }*/
     }
     partial class mazeElement
     {
+        private void draw()
+        {
+            if (direction == 0) return;
+
+            box.reset();
+            if ((direction & e_direction.down) == e_direction.down) setBound_down();
+            if ((direction & e_direction.up) == e_direction.up) setBound_up();
+            if ((direction & e_direction.left) == e_direction.left) setBound_left();
+            if ((direction & e_direction.right) == e_direction.right) setBound_right();
+        }
         private void setBound_down()
         {
             Point p1 = new Point(0, height - 1);
