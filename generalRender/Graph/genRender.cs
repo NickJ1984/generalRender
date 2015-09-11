@@ -8,15 +8,7 @@ using System.Drawing;
 
 namespace generalRender
 {
-    /*[Flags]
-    public enum eBounds
-    {
-        None = 0,
-        Left = 1,
-        Right = 2,
-        Up = 4,
-        Down = 8
-    };*/
+
     partial class mazeElement
     {
         public delegate void changeBoundaries(eBounds direction);
@@ -32,7 +24,7 @@ namespace generalRender
         public int width { get; private set; }
         public int height { get; private set; }
         public Color color { get; private set; }
-        public eBounds direction { get; private set; }
+        public eBounds bounds { get; private set; }
         private Pen cPen;
         private frame box;
         
@@ -51,7 +43,7 @@ namespace generalRender
             : this(_width, _height, Color.Black, eBounds.None)
         { }
         public mazeElement(mazeElement element)
-            :this(element.width, element.height, element.color, element.direction)
+            :this(element.width, element.height, element.color, element.bounds)
         { }
     }
 
@@ -65,19 +57,19 @@ namespace generalRender
         }
         public void setDirection(eBounds _direction)
         {
-            if (direction == _direction || _direction == 0) return;
-            direction = _direction;
+            if (bounds == _direction || _direction == 0) return;
+            bounds = _direction;
             draw();
-            if (onChangeBoundaries != null) onChangeBoundaries(direction);
+            if (onChangeBoundaries != null) onChangeBoundaries(bounds);
         }
         public void addDirection(eBounds _direction)
         {
-            setDirection(direction | _direction);
+            setDirection(bounds | _direction);
         }
 
         public void delDirection(eBounds _direction)
         {
-            if ((direction & _direction) == _direction) setDirection(direction ^ _direction);
+            if ((bounds & _direction) == _direction) setDirection(bounds ^ _direction);
         }
         /*
         public void setNeighboursBounds(mazeElement left, mazeElement right, mazeElement up, mazeElement down)
@@ -111,13 +103,13 @@ namespace generalRender
     {
         private void draw()
         {
-            if (direction == 0) return;
+            if (bounds == 0) return;
 
             box.reset();
-            if ((direction & eBounds.Down) == eBounds.Down) setBound_down();
-            if ((direction & eBounds.Up) == eBounds.Up) setBound_up();
-            if ((direction & eBounds.Left) == eBounds.Left) setBound_left();
-            if ((direction & eBounds.Right) == eBounds.Right) setBound_right();
+            if ((bounds & eBounds.Down) == eBounds.Down) setBound_down();
+            if ((bounds & eBounds.Up) == eBounds.Up) setBound_up();
+            if ((bounds & eBounds.Left) == eBounds.Left) setBound_left();
+            if ((bounds & eBounds.Right) == eBounds.Right) setBound_right();
         }
         private void setBound_down()
         {
