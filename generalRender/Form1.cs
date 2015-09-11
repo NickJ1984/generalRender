@@ -27,7 +27,7 @@ namespace generalRender
             //e.Graphics.DrawImage(mElem.picture, new Point(100, 200));
             //mElem.setColor(Color.Red);
             //e.Graphics.DrawImage(mElem.picture, new Point(150, 200));
-            mazeGraphicArray mga = new mazeGraphicArray(5, 5, 40, 40, Color.Red, e_direction.up | e_direction.down | e_direction.left | e_direction.right);
+            mazeGraphicArray mga = new mazeGraphicArray(5, 5, 40, 40, Color.Red, eBounds.Up | eBounds.Down | eBounds.Left | eBounds.Right);
             mga.draw();
             e.Graphics.DrawImage(mga.picture, new Point(10, 10));
         }

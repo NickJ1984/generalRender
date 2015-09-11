@@ -13,21 +13,21 @@ namespace generalRender
         private Point[,] coords;
         private frame map;
 
-        public mazeGraphicArray(int row_number, int column_number, int cell_width, int cell_height, Color bound_color, e_direction bounds)
+        public mazeGraphicArray(int row_number, int column_number, int cell_width, int cell_height, Color bound_color, eBounds bounds)
         {
             initMazeElements(row_number, column_number, cell_width, cell_height, bound_color, bounds);
             map = new frame(Width, Height);
         }
 
         public mazeGraphicArray(int row_number, int column_number, int cell_width, int cell_height, Color bound_color)
-            :this(row_number, column_number, cell_width, cell_height, bound_color, e_direction.none)
+            :this(row_number, column_number, cell_width, cell_height, bound_color, eBounds.None)
         { }
 
         public mazeGraphicArray(int row_number, int column_number, int cell_width, int cell_height)
-            : this(row_number, column_number, cell_width, cell_height, Color.Black, e_direction.none)
+            : this(row_number, column_number, cell_width, cell_height, Color.Black, eBounds.None)
         { }
 
-        private void initMazeElements(int row, int column, int width, int height, Color color, e_direction bounds)
+        private void initMazeElements(int row, int column, int width, int height, Color color, eBounds bounds)
         {
             elements = new mazeElement[row, column];
             coords = new Point[row, column];

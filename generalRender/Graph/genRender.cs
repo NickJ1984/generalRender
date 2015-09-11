@@ -8,18 +8,18 @@ using System.Drawing;
 
 namespace generalRender
 {
-    [Flags]
-    public enum e_direction
+    /*[Flags]
+    public enum eBounds
     {
-        none = 0,
-        left = 1,
-        right = 2,
-        up = 4,
-        down = 8
-    };
+        None = 0,
+        Left = 1,
+        Right = 2,
+        Up = 4,
+        Down = 8
+    };*/
     partial class mazeElement
     {
-        public delegate void changeBoundaries(e_direction direction);
+        public delegate void changeBoundaries(eBounds direction);
         public event changeBoundaries onChangeBoundaries;
         public Bitmap picture
         {
@@ -32,11 +32,11 @@ namespace generalRender
         public int width { get; private set; }
         public int height { get; private set; }
         public Color color { get; private set; }
-        public e_direction direction { get; private set; }
+        public eBounds direction { get; private set; }
         private Pen cPen;
         private frame box;
         
-        public mazeElement(int _width, int _height, Color _color, e_direction _direction)
+        public mazeElement(int _width, int _height, Color _color, eBounds _direction)
         {
             width = _width;
             height = _height;
@@ -45,10 +45,10 @@ namespace generalRender
             setDirection(_direction);
         }
         public mazeElement(int _width, int _height, Color _color) 
-            : this(_width, _height, _color, e_direction.none)
+            : this(_width, _height, _color, eBounds.None)
         { }
         public mazeElement(int _width, int _height)
-            : this(_width, _height, Color.Black, e_direction.none)
+            : this(_width, _height, Color.Black, eBounds.None)
         { }
         public mazeElement(mazeElement element)
             :this(element.width, element.height, element.color, element.direction)
@@ -63,19 +63,19 @@ namespace generalRender
             color = _color;
             draw();
         }
-        public void setDirection(e_direction _direction)
+        public void setDirection(eBounds _direction)
         {
             if (direction == _direction || _direction == 0) return;
             direction = _direction;
             draw();
             if (onChangeBoundaries != null) onChangeBoundaries(direction);
         }
-        public void addDirection(e_direction _direction)
+        public void addDirection(eBounds _direction)
         {
             setDirection(direction | _direction);
         }
 
-        public void delDirection(e_direction _direction)
+        public void delDirection(eBounds _direction)
         {
             if ((direction & _direction) == _direction) setDirection(direction ^ _direction);
         }
@@ -114,10 +114,10 @@ namespace generalRender
             if (direction == 0) return;
 
             box.reset();
-            if ((direction & e_direction.down) == e_direction.down) setBound_down();
-            if ((direction & e_direction.up) == e_direction.up) setBound_up();
-            if ((direction & e_direction.left) == e_direction.left) setBound_left();
-            if ((direction & e_direction.right) == e_direction.right) setBound_right();
+            if ((direction & eBounds.Down) == eBounds.Down) setBound_down();
+            if ((direction & eBounds.Up) == eBounds.Up) setBound_up();
+            if ((direction & eBounds.Left) == eBounds.Left) setBound_left();
+            if ((direction & eBounds.Right) == eBounds.Right) setBound_right();
         }
         private void setBound_down()
         {
