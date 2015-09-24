@@ -53,6 +53,7 @@
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
     <Compile Include="Graph\genRender.cs" />
+    <Compile Include="Graph\mazecs.cs" />
     <Compile Include="Graph\mazeGraphicArray.cs" />
     <Compile Include="Math\maze_frame.cs" />
     <Compile Include="Math\mCell.cs" />

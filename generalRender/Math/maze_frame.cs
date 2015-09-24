@@ -8,6 +8,56 @@ using System.Drawing;
 
 namespace generalRender
 {
+    class maze_processor
+    {
+        #region Constants
+        private const int minCellSize = 6;
+        private const int defCellSize = 20;
+        #endregion
+        #region Variables
+        public readonly int cellsCount;
+        public readonly int columnsCount;
+        public readonly int rowsCount;
+        public readonly Point resolution;
+        public readonly int cellSize;
+        #endregion
+        #region Constructors
+        public maze_processor(Point Resolution, int cell_size)
+        {
+            if (cell_size < minCellSize) cell_size = minCellSize;
+            cellSize = cell_size;
+
+            resolution = Resolution;
+            columnsCount = Resolution.X / cellSize;
+            rowsCount = Resolution.Y / cellSize;
+            cellsCount = columnsCount * rowsCount;
+            resolution.X = columnsCount * cellSize;
+            resolution.Y = rowsCount * cellSize;
+        }
+        public maze_processor(Point Resolution)
+            :this(Resolution, defCellSize)
+        { }
+        public maze_processor()
+            :this(new Point(800,600), defCellSize)
+        { }
+        #endregion
+        #region cell information
+        public int getCellRow(int number)
+        {
+            if (number < 0 || number > cellsCount - 1) return -1;
+            if (number > columnsCount - 1)
+            { return (number % columnsCount != 0) ? number / columnsCount : number / columnsCount - 1; }
+            else return 0;
+        }
+        public int getCellColumn(int number)
+        {
+            if (number < 0 || number > cellsCount - 1) return -1;
+            return number % columnsCount;
+        }
+        public Point getCellCoordinates(int number)
+        { return new Point(getCellColumn(number) * cellSize, getCellRow(number) * cellSize); }
+        #endregion
+    }
     class maze_frame_calculation
     {
         #region Constants

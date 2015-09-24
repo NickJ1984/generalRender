@@ -19,6 +19,7 @@ namespace generalRender
 
         private void Form1_Paint(object sender, PaintEventArgs e)
         {
+            
             /*frame box = new frame(100, 100);
             box.graphic.DrawRectangle(Pens.Aqua, 0, 0, 99, 99);
             e.Graphics.DrawImage(box.bmap, new Point(100, 100));*/
@@ -30,6 +31,8 @@ namespace generalRender
             mazeGraphicArray mga = new mazeGraphicArray(5, 5, 40, 40, Color.Red, eBounds.Up | eBounds.Down | eBounds.Left | eBounds.Right);
             mga.draw();
             e.Graphics.DrawImage(mga.picture, new Point(10, 10));
+            maze_processor mp = new maze_processor();
+            
         }
     }
 }

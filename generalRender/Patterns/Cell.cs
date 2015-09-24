@@ -13,7 +13,6 @@ namespace generalRender
         public int Width { get; private set; }
         public int Height { get; private set; }
         public eBounds Bounds { get; private set; }
-        public Point Coodinates { get; private set; }
         #endregion
 
         #region Events
@@ -22,22 +21,22 @@ namespace generalRender
         #endregion
 
         #region Constructors
-        public Cell(int _width, int _height, Point coords, eBounds _bounds)
+        public Cell(int _width, int _height, eBounds _bounds)
         {
             Width = _width;
             Height = _height;
-            Coodinates = coords;
-            Bounds = _bounds;
+            setBounds(_bounds);
         }
-        public Cell(int _width, int _height, eBounds _bounds)
-            :this(_width, _height, new Point(-1,-1), _bounds)
-        { }
-        public Cell(int _width, int _height, Point coords)
-            : this(_width, _height, coords, eBounds.None)
-        { }
         public Cell(int _width, int _height)
-            : this(_width, _height, new Point(-1, -1), eBounds.None)
+            : this(_width, _height, eBounds.None)
         { }
+        public Cell(eBounds _bounds)
+            : this(0, 0, _bounds)
+        { }
+        public Cell()
+            : this(0, 0, eBounds.None)
+        { }
+
         #endregion
 
         #region Bounds
@@ -76,7 +75,107 @@ namespace generalRender
             if (changeBounds != null) changeBounds(Bounds);
         }
         #endregion
+
+        #region Coordinates
+
+        public Point topLeft { get { return new Point(0, 0); } }
+        public Point topRight { get { return new Point(Width - 1, 0); } }
+        public Point bottomLeft { get { return new Point(0, Height - 1); } }
+        public Point bottomRight { get { return new Point(Width - 1, Height - 1); } }
+
+        #endregion
     }
 
 
+    partial class graphicElement : Cell
+    {
+        private Pen cPen;
+        private frame box;
+        private bool _autoDraw;
+        
+        public Color color { get; private set; }
+
+        public bool autoDraw
+        {
+            get { return _autoDraw; }
+            set
+            {
+                if(value == true & _autoDraw != true)
+                {
+                    _autoDraw = true;
+                    changeBounds += changeBoundsHandler;                    
+                }
+                else if(value == false & _autoDraw != false)
+                {
+                    _autoDraw = false;
+                    changeBounds -= changeBoundsHandler;
+                }
+            }
+        }
+        public Bitmap picture
+        {
+            get
+            {
+                return box.bmap;
+            }
+        }
+    }
+
+    partial class graphicElement : Cell
+    {
+        public graphicElement(int _width, int _height, Color _color, eBounds _bounds)
+            :base(_width, _height, _bounds)
+        {
+            box = new frame(Width, Height);
+            setColor(_color);
+            _autoDraw = false;
+        }
+        public graphicElement(int _width, int _height, eBounds _bounds)
+            :this(_width, _height, Color.Red, _bounds)
+        { }
+        public graphicElement(int _width, int _height, Color _color)
+            : this(_width, _height, _color, eBounds.None)
+        { }
+        public graphicElement(int _width, int _height)
+            : this(_width, _height, Color.Red, eBounds.None)
+        { }
+    }
+
+    partial class graphicElement : Cell
+    {
+        public void setColor(Color _color)
+        {
+            color = _color;
+            cPen = new Pen(color);
+        }
+        private void changeBoundsHandler(eBounds _bounds)
+        {
+            draw();
+        }
+
+        #region draw methods
+        private void drawBoundDown()
+        { box.graphic.DrawLine(cPen, bottomLeft, bottomRight); }
+        private void drawBoundLeft()
+        { box.graphic.DrawLine(cPen, topLeft, bottomLeft); }
+        private void drawBoundUp()
+        { box.graphic.DrawLine(cPen, topLeft, topRight); }
+        private void drawBoundRight()
+        { box.graphic.DrawLine(cPen, topRight, bottomRight); }
+        public void draw()
+        {
+            if (Bounds == 0) return;
+
+            box.reset();
+            if ((Bounds & eBounds.Down) == eBounds.Down) drawBoundDown();
+            if ((Bounds & eBounds.Up) == eBounds.Up) drawBoundUp();
+            if ((Bounds & eBounds.Left) == eBounds.Left) drawBoundLeft();
+            if ((Bounds & eBounds.Right) == eBounds.Right) drawBoundRight();
+        }
+
+        #endregion
+    }
+
 }
+
+
